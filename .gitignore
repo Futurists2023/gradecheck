@@ -1,0 +1,24 @@
+.next
+node_modules
+.env.local
+out
+tsconfig.tsbuildinfo
+google auth/*.json
+google-auth/*.json
+
+# Generated build/search artifacts
+public/sitemap*.xml
+generated/
+
+# Local pipeline and extraction-only surfaces
+pipeline/
+scripts/pipeline-*.ts
+scripts/generate-publishability-manifest.ts
+scripts/audit-live-dataset.mjs
+scripts/load-local-env.ts
+scripts/load-local-env.d.ts
+scripts/load-local-env.mjs
+
+# Internal notes / handoff docs not needed for deploy push
+DATA_PIPELINE_BLUEPRINT.md
+MVP_SCRAPING_REPORT.md
