@@ -1,7 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import pool from "@/lib/db";
-import { ensureMonitoringTables } from "@/pipeline/monitoring";
 import { MONITORED_ROUTE_TYPES } from "@/lib/monitoring";
 import type {
   MonitoringActionType,
@@ -47,7 +46,6 @@ export async function POST(request: NextRequest) {
 
   try {
     await client.query("BEGIN");
-    await ensureMonitoringTables(client);
     await client.query(
       `
         INSERT INTO monitoring_action_approvals (

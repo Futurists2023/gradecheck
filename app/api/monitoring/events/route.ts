@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import pool from "@/lib/db";
 import { detectMonitoringRouteType, normalizeMonitoringHref } from "@/lib/monitoring";
-import { ensureMonitoringTables } from "@/pipeline/monitoring";
 import type { MonitoringEventName } from "@/types/monitoring";
 
 const ALLOWED_EVENT_NAMES = new Set<MonitoringEventName>([
@@ -68,7 +67,6 @@ export async function POST(request: NextRequest) {
 
   try {
     await client.query("BEGIN");
-    await ensureMonitoringTables(client);
     await client.query(
       `
         INSERT INTO monitoring_action_events (
