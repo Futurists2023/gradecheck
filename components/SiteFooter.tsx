@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -22,6 +23,21 @@ export function SiteFooter() {
     <footer className="border-t border-border/80 bg-white/70 py-12">
       <div className="container-shell grid gap-8 text-sm text-muted-foreground lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div className="space-y-3">
+          <div className="mb-6">
+            <Link href="/" className="group flex items-center gap-3">
+              <Image
+                src="/logo-icon.png"
+                alt="GradeCheck Logo"
+                width={40}
+                height={40}
+                className="h-8 w-auto object-contain grayscale transition duration-300 group-hover:scale-105 group-hover:grayscale-0"
+              />
+              <span className="text-xl font-bold tracking-tight grayscale transition duration-300 group-hover:grayscale-0">
+                <span className="text-slate-900 dark:text-slate-100">Grade</span>
+                <span className="text-primary">Check</span>
+              </span>
+            </Link>
+          </div>
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
             Trust and source context
           </p>
