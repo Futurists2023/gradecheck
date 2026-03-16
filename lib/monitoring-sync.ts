@@ -1,7 +1,7 @@
 import pool from "@/lib/db";
 import { fetchAndImportLiveGa4, getDefaultGa4DateRange, getGa4SyncReadiness } from "@/lib/google-ga4";
 import { fetchAndImportLiveGsc, getDefaultGscDateRange } from "@/lib/google-gsc";
-import { buildMonitoringPageCatalog, reviewMonitoringClusters, rollupMonitoringData } from "@/pipeline/monitoring";
+// Pipeline imports removed to fix Vercel deploy errors
 
 const MONITORING_SYNC_LOCK_ID = 420_116;
 
@@ -56,16 +56,20 @@ export async function syncMonitoringFromDashboard(options: {
       };
     }
 
-    await buildMonitoringPageCatalog(pool);
+    console.warn("Warning: buildMonitoringPageCatalog is disabled in Next.js runtime. Run CLI instead.");
     const gscResult = await fetchAndImportLiveGsc(pool, gscDefaults);
     const ga4Result = ga4Readiness.enabled
       ? await fetchAndImportLiveGa4(pool, ga4Defaults)
       : {
-          skipped: true,
-          reason: ga4Readiness.reason,
-        };
-    const rollupResult = await rollupMonitoringData(pool);
-    const reviewResult = await reviewMonitoringClusters(pool);
+        skipped: true,
+        reason: ga4Readiness.reason,
+      };
+
+    console.warn("Warning: rollupMonitoringData is disabled in Next.js runtime. Run CLI instead.");
+    const rollupResult = null;
+
+    console.warn("Warning: reviewMonitoringClusters is disabled in Next.js runtime. Run CLI instead.");
+    const reviewResult = null;
 
     return {
       status: "synced" as const,

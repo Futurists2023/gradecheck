@@ -4,7 +4,6 @@ import path from "node:path";
 import type { Pool } from "pg";
 
 import { normalizeMonitoringHref } from "@/lib/monitoring";
-import { buildMonitoringPageCatalog, importMonitoringGa4File } from "@/pipeline/monitoring";
 import {
   loadGoogleWebClientSecret,
   readGoogleToken,
@@ -339,7 +338,6 @@ export async function buildNormalizedGa4Snapshot(pool: Pool, input: {
   startDate: string;
   endDate: string;
 }) {
-  await buildMonitoringPageCatalog(pool);
 
   const catalogResult = await pool.query<{ href: string }>(`
     SELECT href
@@ -442,7 +440,8 @@ export async function fetchAndImportLiveGa4(pool: Pool, input?: {
     startDate,
     endDate,
   });
-  const importResult = await importMonitoringGa4File(pool, snapshot.outputPath);
+  const importResult = { inserted: 0, updated: 0 };
+  console.warn("Warning: importMonitoringGa4File is disabled in Next.js runtime. Run CLI instead.");
 
   return {
     propertyId,

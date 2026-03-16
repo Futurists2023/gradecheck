@@ -1,7 +1,6 @@
 import "server-only";
 
 import pool from "@/lib/db";
-import { ensureMonitoringTables } from "@/pipeline/monitoring";
 import type {
   MonitoringActionType,
   MonitoringApprovalDecision,
@@ -47,7 +46,6 @@ export async function getMonitoringOverview(): Promise<MonitoringOverview> {
   const client = await pool.connect();
 
   try {
-    await ensureMonitoringTables(client);
     const freshnessResult = await client.query<{
       latest_review_date: string | null;
       latest_gsc_date: string | null;
@@ -196,7 +194,6 @@ export async function getMonitoringClusterList(filters: {
   const client = await pool.connect();
 
   try {
-    await ensureMonitoringTables(client);
     const result = await client.query<LatestReviewRow>(
       `
       SELECT DISTINCT ON (route_type)
@@ -244,7 +241,6 @@ export async function getMonitoringClusterDetail(
   const client = await pool.connect();
 
   try {
-    await ensureMonitoringTables(client);
     const reviewResult = await client.query<LatestReviewRow>(
       `
         SELECT

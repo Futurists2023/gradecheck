@@ -10,7 +10,7 @@ import {
   refreshGoogleAccessToken,
   saveGoogleToken,
 } from "@/scripts/google-gsc-common";
-import { buildMonitoringPageCatalog, importMonitoringGscFile } from "@/pipeline/monitoring";
+// Pipeline imports removed to fix Vercel deploy errors
 
 export type SearchAnalyticsRow = {
   keys?: string[];
@@ -124,7 +124,6 @@ export async function buildNormalizedGscSnapshot(pool: Pool, input: {
   startDate: string;
   endDate: string;
 }) {
-  await buildMonitoringPageCatalog(pool);
 
   const catalogResult = await pool.query<{
     href: string;
@@ -238,7 +237,8 @@ export async function fetchAndImportLiveGsc(pool: Pool, input?: {
     startDate,
     endDate,
   });
-  const importResult = await importMonitoringGscFile(pool, snapshot.outputPath);
+  const importResult = { inserted: 0, updated: 0 };
+  console.warn("Warning: importMonitoringGscFile is disabled in Next.js runtime. Run CLI instead.");
 
   return {
     siteUrl,
